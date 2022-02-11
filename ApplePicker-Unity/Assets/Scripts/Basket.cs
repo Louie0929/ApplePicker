@@ -2,22 +2,28 @@
  * Created By: Xingzhou Li
  * Date Created: 1/31/2022
  * 
- * Last Edited: 2/7/2022
+ * Last Edited: 2/10/2022
  * Edited by: Xingzhou Li
  * 
- * Description: Moving the Baskets with the Mouse
+ * Description: Adding point when successfully catch apple
 */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // This line enables use of uGUI feature
 
 public class Basket : MonoBehaviour
 {
+    [Header("Set Dynamically")]
+    public Text scoreGT;
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        GameObject scoreGO = GameObject.Find("ScoreCounter"); // Get the Text Component of
+                                                              // that GameObject
+        scoreGT = scoreGO.GetComponent<Text>(); // Set the starting number of points to 0
+        scoreGT.text = "0";
+    } // end Start
 
     // Update is called once per frame
     void Update()
@@ -40,6 +46,14 @@ public class Basket : MonoBehaviour
         if (collidedWith.tag == "Apple")
         {
             Destroy(collidedWith);
+            int score = int.Parse(scoreGT.text); // Parse the text of the scoreGT into an int
+            score += 100; // Add points for catching the apple
+            scoreGT.text = score.ToString(); // Convert the score back to a
+                                             // string and display it
+            if (score > HighScore.score)
+            {
+                HighScore.score = score; // track the high score
+            }
         }
     } // end OnCollisionEnter
 }

@@ -14,7 +14,9 @@ using UnityEngine;
 
 public class Apple : MonoBehaviour
 {
+    [Header("Set in Inspector")]
     public static float bottomY = -20f;
+
 
     // Update is called once per frame
     void Update()
@@ -22,6 +24,10 @@ public class Apple : MonoBehaviour
       if (transform.position.y < bottomY)
         {
             Destroy(this.gameObject);
+            ApplePicker apScript = Camera.main.GetComponent<ApplePicker>(); // Get the reference to
+                                                                            // the ApplePicker component of Main
+                                                                            // Camera
+            apScript.AppleDestroyed(); // Call the public AppleDestroyed() method of apScript
         }  
-    }
+    } // end Update
 }
